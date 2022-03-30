@@ -8,9 +8,11 @@ module.exports = {
 		parser: "@babel/eslint-parser",
 	},
 	rules: {
+        quotes: ["off"],
+        indent: ["off"],
+        "no-tabs": [1, { allowIndentationTabs: true }],
 		"no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
 		"no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
-		allowIndentationTabs: true,
 	},
 	overrides: [
 		{
