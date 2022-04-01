@@ -12,6 +12,6 @@ export default createStore({
 	},
 	getters: {
 		//getters are how to show a state value
-		authModalShow: (state) => state.authModalShow,
+		// authModalShow: (state) => state.authModalShow,
 	},
 });

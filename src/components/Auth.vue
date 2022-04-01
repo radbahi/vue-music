@@ -37,20 +37,33 @@
 					<ul class="flex flex-wrap mb-4">
 						<li class="flex-auto text-center">
 							<a
-								class="block rounded py-3 px-4 transition hover:text-white text-white bg-blue-600"
+								class="block rounded py-3 px-4 transition"
 								href="#"
-								>Login</a
+								@click.prevent="tab = 'login'"
+								:class="{
+									'hover:text-white text-white bg-blue-600': tab === 'login',
+									'hover:text-blue-600': tab === 'register',
+								}"
 							>
+								Login
+							</a>
 						</li>
 						<li class="flex-auto text-center">
-							<a class="block rounded py-3 px-4 transition" href="#"
-								>Register</a
-							>
+							<a
+								class="block rounded py-3 px-4 transition"
+								href="#"
+								@click.prevent="tab = 'register'"
+								:class="{
+									'hover:text-white text-white bg-blue-600': tab === 'register',
+									'hover:text-blue-600': tab === 'login',
+								}"
+								>Register
+							</a>
 						</li>
 					</ul>
 
 					<!-- Login Form -->
-					<form>
+					<form v-show="tab === 'login'">
 						<!-- Email -->
 						<div class="mb-3">
 							<label class="inline-block mb-2">Email</label>
@@ -77,11 +90,13 @@
 						</button>
 					</form>
 					<!-- Registration Form -->
-					<form>
+					<vee-form v-show="tab === 'register'">
 						<!-- Name -->
 						<div class="mb-3">
 							<label class="inline-block mb-2">Name</label>
-							<input
+							<!-- vee-field uses input by default. pass in as="" to override this -->
+							<vee-field
+								name="name"
 								type="text"
 								class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
 								placeholder="Enter Name"
@@ -147,7 +162,7 @@
 						>
 							Submit
 						</button>
-					</form>
+					</vee-form>
 				</div>
 			</div>
 		</div>
@@ -155,14 +170,26 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
 
 export default {
 	name: "Auth-vue",
+	data() {
+		return {
+			tab: "login",
+		};
+	},
 	computed: {
-		authModalShow() {
-			return this.$store.getters.authModalShow;
-		},
+		//mapState generates getter functions that return state properties.
+		//getters are better for performing a calculation with a state property
+		//mapping state is better for just getting a state property
+
+		// ...mapState({
+		// 	//this is how to use an alias. must be in object
+		// 	modal: "authModalShow",
+		// }),
+
+		...mapState(["authModalShow"]),
 	},
 	methods: { ...mapMutations(["toggleAuthModal"]) },
 };
