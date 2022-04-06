@@ -15,6 +15,7 @@ module.exports = {
 		"vuejs-accessibility/label-has-for": ["off"],
 		"vuejs-accessibility/click-events-have-key-events": ["off"],
 		"implicit-arrow-linebreak": ["off"],
+		"operator-linebreak": ["off"],
 		"no-tabs": ["off"],
 		"no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
 		"no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",

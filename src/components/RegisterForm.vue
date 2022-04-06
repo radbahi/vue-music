@@ -112,6 +112,10 @@
 </template>
 
 <script>
+// we are importing the firebase file here, NOT the module
+// @ is a shorthand to the src directory
+import firebase from "@/includes/firebase";
+
 export default {
 	name: "RegisterForm",
 	data() {
@@ -137,15 +141,28 @@ export default {
 		};
 	},
 	methods: {
-		register(values) {
+		async register(values) {
 			this.reg_show_alert = true;
 			this.reg_in_submission = true;
 			this.reg_alert_variant = "bg-blue-500";
 			this.reg_alert_msg = "Please wait! Your account is being created.";
 
-			this.reg_alert_variant = "bg-green-500";
-			this.reg_alert_msg = "Success! Your account has been created.";
-			console.log(values);
+			//we define userCred out here because it won't be in scope if defined in the trycatch
+			let userCred = null;
+
+			try {
+				userCred = await firebase
+					.auth()
+					.createUserWithEmailAndPassword(values.email, values.password);
+				this.reg_alert_variant = "bg-green-500";
+				this.reg_alert_msg = "Success! Your account has been created.";
+				console.log(userCred);
+			} catch (error) {
+				this.reg_in_submission = false;
+				this.reg_alert_variant = "bg-red-500";
+				this.reg_alert_msg = error.message;
+				console.log(error);
+			}
 		},
 	},
 };
