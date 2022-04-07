@@ -14,4 +14,25 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-export default firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
+
+// Naming these so we can use them multiple times throughout the app without having to write out the function
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+// pull data from users collection
+// if collection doesn't exist, fb will make one with the name you passed in
+const usersCollection = db.collection("users");
+
+export { auth, db, usersCollection };
+
+// ------------------firestore rules------------------
+// rules_version = '2';
+// service cloud.firestore {
+//   match /databases/{database}/documents {
+//     match /{document=**} {
+//       allow read: if true
+//       allow write: if request.auth.uid != null
+//     }
+//   }
+// }

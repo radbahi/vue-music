@@ -17,6 +17,7 @@ module.exports = {
 		"implicit-arrow-linebreak": ["off"],
 		"operator-linebreak": ["off"],
 		"no-tabs": ["off"],
+		"comma-dangle": ["off"],
 		"no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
 		"no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
 	},

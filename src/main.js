@@ -3,15 +3,23 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import VeeValidatePlugin from "./includes/validation";
-import "./includes/firebase";
+import { auth } from "./includes/firebase";
 import "./assets/tailwind.css";
 import "./assets/main.css";
 
-const app = createApp(App);
+let app;
 
-app.use(store);
-app.use(router);
-//register veevalidate globally because we will be using it in multiple areas
-app.use(VeeValidatePlugin);
+//we load firebase before the app below to check auth stuff/keep the user logged in
+//firebase handles saving token to localstorage
+auth.onAuthStateChanged(() => {
+	if (!app) {
+		app = createApp(App);
 
-app.mount("#app");
+		app.use(store);
+		app.use(router);
+		//register veevalidate globally because we will be using it in multiple areas
+		app.use(VeeValidatePlugin);
+
+		app.mount("#app");
+	}
+});
